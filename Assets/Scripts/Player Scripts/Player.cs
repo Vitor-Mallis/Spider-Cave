@@ -78,6 +78,12 @@ public class Player : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D collision) {
 		if (collision.tag == "Spider") {
 			Destroy (gameObject);
+		} else if (collision.tag == "Gem" || collision.tag == "Collectible") {
+			Destroy (collision.gameObject);
+			Door.instance.DecrementGems ();
+		} else if (collision.tag == "Door") {
+			if (Door.instance.isOpen)
+				Debug.Log ("Level Finished!");
 		}
 	}
 }
