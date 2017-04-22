@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Bouncer Scripts\Bouncer.cs" />
+     <Compile Include="Assets\Scripts\Controller Scripts\MenuController.cs" />
      <Compile Include="Assets\Scripts\Door Scripts\Door.cs" />
      <Compile Include="Assets\Scripts\Player Scripts\Player.cs" />
      <Compile Include="Assets\Scripts\Spider Scripts\SpiderBullet.cs" />
