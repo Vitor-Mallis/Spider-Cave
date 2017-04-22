@@ -50,6 +50,7 @@
      <Compile Include="Assets\Scripts\Spider Scripts\SpiderBullet.cs" />
      <Compile Include="Assets\Scripts\Spider Scripts\SpiderJumper.cs" />
      <Compile Include="Assets\Scripts\Spider Scripts\SpiderShooter.cs" />
+     <Compile Include="Assets\Scripts\Spider Scripts\SpiderWalker.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
