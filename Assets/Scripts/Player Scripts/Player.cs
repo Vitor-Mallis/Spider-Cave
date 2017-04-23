@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 
+	public static Player instance;
+
 	Rigidbody2D rigidBody;
 	Animator animator;
 
@@ -12,14 +14,25 @@ public class Player : MonoBehaviour {
 	bool grounded = true;
 
 	void Awake() {
+		if (instance == null)
+			instance = this;
+
 		rigidBody = GetComponent<Rigidbody2D> ();
 		animator = GetComponent<Animator> ();
+	}
+
+	public float GetPositionX() {
+		return transform.position.x;
+	}
+
+	public float GetPositionY() {
+		return transform.position.y;
 	}
 
 	void FixedUpdate() {
 		MoveKeyboard();
 
-		if (Input.GetKey (KeyCode.Space)) {
+		if (Input.GetKeyDown (KeyCode.Space)) {
 			Jump ();
 		}
 	}
@@ -76,10 +89,22 @@ public class Player : MonoBehaviour {
 		}
 	}
 
+	public void Bounce() {
+		if (grounded) {
+			grounded = false;
+		}
+			Vector2 temp = rigidBody.velocity;
+			temp.y = 0;
+			rigidBody.velocity = temp;
+
+			rigidBody.AddForce (new Vector2 (0, jumpForce * 1.5f));
+	}
+
 	void OnCollisionEnter2D(Collision2D collision) {
-		if (collision.gameObject.tag == "Ground")
-			grounded = true;
-		else if (collision.gameObject.tag == "Spider") {
+		if (collision.gameObject.tag == "Ground") {
+			if((collision.gameObject.transform.position.y + collision.gameObject.GetComponent<BoxCollider2D>().size.y / 2) < (transform.position.y + gameObject.GetComponent<BoxCollider2D>().size.y / 2))
+				grounded = true;
+		} else if (collision.gameObject.tag == "Spider") {
 			Destroy (gameObject);
 		}
 	}
@@ -87,22 +112,12 @@ public class Player : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D collision) {
 		if (collision.tag == "Spider") {
 			Destroy (gameObject);
-		} else if (collision.tag == "Gem" || collision.tag == "Collectible") {
+		} else if (collision.tag == "Gem") {
 			Destroy (collision.gameObject);
 			Door.instance.DecrementGems ();
 		} else if (collision.tag == "Door") {
 			if (Door.instance.isOpen)
 				Debug.Log ("Level Finished!");
-		} else if (collision.tag == "Bouncer") {
-			if (grounded)
-				grounded = false;
-
-			Vector2 temp = rigidBody.velocity;
-			temp.y = 0;
-			rigidBody.velocity = temp;
-
-			rigidBody.AddForce(new Vector2 (0, jumpForce * 1.2f));
-			collision.GetComponent<Bouncer> ().Bounce();
 		}
 	}
 }

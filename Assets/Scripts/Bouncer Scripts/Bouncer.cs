@@ -19,4 +19,11 @@ public class Bouncer : MonoBehaviour {
 		yield return new WaitForSeconds (.7f);
 		animator.SetTrigger ("Bounce");
 	}
+
+	void OnTriggerEnter2D(Collider2D collision) {
+		if (collision.tag == "Player") {
+			Player.instance.Bounce ();
+			Bounce ();
+		}
+	}
 }
