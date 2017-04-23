@@ -116,7 +116,7 @@ public class Player : MonoBehaviour {
 			}
 
 			animator.SetBool ("Walk", true);
-		} else {
+		} else if(moveRight) {
 			scale = transform.localScale;
 			scale.x = 1f;
 			transform.localScale = scale;
